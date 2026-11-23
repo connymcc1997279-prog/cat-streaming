@@ -3,7 +3,7 @@
   "short_name": "Cat Streaming",
   "description": "Catálogo de Cat Streaming",
   "start_url": "./",
-  "scope": "./",
+ "scope": "./",
   "display": "standalone",
   "background_color": "#100c18",
   "theme_color": "#a64dff",
