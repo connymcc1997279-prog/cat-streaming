@@ -1,0 +1,79 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#a64dff"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png"><link rel="apple-touch-icon" href="./icon-192.png"><title>Cat Streaming</title><style>
+:root{font-family:system-ui,-apple-system,sans-serif;color:#f9f4ff;background:#100c18}*{box-sizing:border-box}body{margin:0}header{position:sticky;top:0;z-index:2;background:#171021ee;backdrop-filter:blur(12px);border-bottom:1px solid #463053;padding:10px 16px;display:flex;align-items:center;gap:12px}header img{width:48px;height:48px;border-radius:50%}header strong{font-size:20px}main{max-width:980px;margin:auto;padding:18px}.hero{text-align:center;padding:25px 12px;background:radial-gradient(circle at top,#4c1a61,#1b1126 65%);border:1px solid #63326d;border-radius:24px}.hero img{width:125px;border-radius:50%}.hero h1{margin:8px}.muted{color:#b8a9c4}.btn,button,select,input,textarea{font:inherit}button,.btn{background:#a64dff;color:white;border:0;border-radius:13px;padding:12px 16px;cursor:pointer;text-decoration:none;display:inline-block;font-weight:700}button.secondary,.btn.secondary{background:#34273e}button:disabled{opacity:.4;cursor:not-allowed}.controls{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.controls input,.controls select,input,textarea{background:#251c30;color:white;border:1px solid #60426f;border-radius:11px;padding:12px;min-width:0}.controls input{flex:1;min-width:180px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:15px}.card{background:#21172b;border:1px solid #50325f;border-radius:18px;overflow:hidden;padding:17px}.card h3{margin:4px 0 7px}.category{color:#eaa4ee;font-size:12px}.price{font-weight:800;color:#ff9cd6}.plan{border-top:1px solid #4d375a;padding:12px 0}.plan small{display:block;color:#b8a9c4;margin:5px 0}.pill{background:#382444;border-radius:30px;padding:4px 8px;color:#f4c4f6;font-size:12px}.hidden{display:none!important}.note{background:#271d30;border-left:3px solid #f49bd7;padding:13px;border-radius:8px;margin:18px 0}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.admin{border:1px solid #64416d;background:#21172b;padding:18px;border-radius:18px;margin-top:22px}.admin input,.admin select{width:100%;margin:5px 0 12px}.admin label{font-size:13px;color:#d4b7df}.itemrow{padding:10px;border-bottom:1px solid #4b3655}.topnav{margin-left:auto}.topnav button{padding:9px}.empty{padding:25px;text-align:center;color:#b8a9c4}@media(max-width:500px){main{padding:12px}.grid{grid-template-columns:1fr}}
+
+.loginbox{max-width:440px;margin:24px auto;padding:22px;border:1px solid #64416d;background:#21172b;border-radius:18px}.loginbox input{display:block;width:100%;margin:8px 0 14px}.loginbox label{font-size:13px;color:#d4b7df}.loginbox p{line-height:1.5}.status{margin:10px 0;color:#f4c4f6}.admin textarea{width:100%}
+</style></head><body><header><img src="icon-192.png" alt="Logo Cat Streaming"><strong>Cat Streaming</strong><div class="topnav"><button class="secondary" id="adminToggle">Administrar</button></div></header><main><section class="hero"><img src="icon-192.png" alt="Cat Streaming"><h1>Bienvenidos a Cat Streaming</h1><p class="muted">Explora nuestros servicios, modalidades y precios de referencia.</p><a class="btn secondary" href="https://wa.me/56946636714?text=Hola%2C%20quiero%20consultar%20por%20Cat%20Streaming" target="_blank" rel="noopener">Consultar por WhatsApp</a></section><div class="note">Catálogo informativo en preparación. Disponibilidad y autorizaciones pendientes de verificar. No se aceptan pedidos ni pagos desde esta aplicación.</div><section id="shop"><div class="controls"><input id="search" placeholder="Buscar servicio…" aria-label="Buscar servicio"><select id="category" aria-label="Categoría"></select></div><p id="count" class="muted"></p><div id="catalog" class="grid"></div></section><section id="login" class="loginbox hidden"><h2>Acceso a Administrar</h2><p class="muted">Ingresa con tu cuenta autorizada de Supabase.</p><form id="loginForm"><label>Correo electrónico<input id="loginEmail" type="email" autocomplete="username" required></label><label>Contraseña<input id="loginPassword" type="password" autocomplete="current-password" required></label><button id="loginSubmit" type="submit">Iniciar sesión</button></form><p id="loginStatus" class="status" role="status"></p><button id="cancelLogin" class="secondary">Volver al catálogo</button></section><section id="admin" class="admin hidden"><h2>Administrar catálogo</h2><p class="muted">Los cambios se guardan en Supabase y se reflejan en los demás dispositivos.</p><div class="toolbar"><button id="logout" class="secondary">Cerrar sesión</button><button id="export" class="secondary">Exportar respaldo JSON</button></div><p id="adminStatus" class="status" role="status"></p><h3>Editar servicio</h3><label>Servicio<select id="editProduct"></select></label><label>Nombre<input id="editName"></label><label>Categoría<input id="editCategory"></label><label>Descripción<textarea id="editDesc" rows="3"></textarea></label><label><input id="editServiceActive" type="checkbox" style="width:auto"> Servicio activo (visible al público)</label><p><button id="saveProduct">Guardar servicio</button></p><h3>Editar plan</h3><label>Plan<select id="editPlan"></select></label><label>Nombre<input id="editPlanName"></label><label>Precio CLP<input id="editPrice" type="number" min="0" step="1"></label><label><input id="editPlanActive" type="checkbox" style="width:auto"> Plan activo (visible al público)</label><p><button id="savePlan">Guardar plan</button></p><p class="muted">Los pagos siguen deshabilitados. La edición requiere permisos de Supabase.</p></section></main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script><script>
+const SUPABASE_URL='https://kfrjgeyzfycyfssagyqe.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY='sb_publishable_B22dcPnvOq70gXZP-cGRbQ_NbAcBU4B';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>Number.isFinite(Number(n))?new Intl.NumberFormat('es-CL',{style:'currency',currency:'CLP',maximumFractionDigits:0}).format(n):'Consultar';
+let db=null, services=[],plans=[],session=null,view='shop';
+function showView(v){view=v;for(const id of ['shop','login','admin'])$(id).classList.toggle('hidden',id!==v);$('adminToggle').textContent=v==='shop'?'Administrar':'Ver catálogo'}
+function status(id,msg){$(id).textContent=msg||''}
+function normalizeError(e){return e?.message||'Ocurrió un error de conexión.'}
+async function loadCatalog(){
+  const [a,b]=await Promise.all([db.from('servicios').select('id,nombre,categoria,descripcion,activo').order('id'),db.from('planes').select('id,servicio_id,nombre,precio,activo').order('id')]);
+  if(a.error)throw a.error;if(b.error)throw b.error;
+  services=a.data||[];plans=b.data||[];render();loadEditors();
+}
+function render(){
+  const publicServices=services.filter(p=>p.activo===true), publicPlans=plans.filter(p=>p.activo===true);
+  const cats=[...new Set(publicServices.map(p=>p.categoria).filter(Boolean))];const selected=$('category').value;
+  $('category').innerHTML='<option value="">Todas las categorías</option>'+cats.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  $('category').value=cats.includes(selected)?selected:'';
+  const search=$('search').value.toLocaleLowerCase('es'),cat=$('category').value;
+  const found=publicServices.filter(p=>(!cat||p.categoria===cat)&&(`${p.nombre} ${p.descripcion||''}`.toLocaleLowerCase('es').includes(search)));
+  $('count').textContent=`${found.length} servicios · ${publicPlans.length} planes activos en el catálogo`;
+  $('catalog').innerHTML=found.map(p=>{
+    const ps=publicPlans.filter(x=>String(x.servicio_id)===String(p.id));
+    return `<article class="card"><span class="category">${esc(p.categoria)}</span><h3>${esc(p.nombre)}</h3><p class="muted">${esc(p.descripcion)}</p><span class="pill">Disponibilidad por confirmar</span><details><summary style="cursor:pointer;margin:14px 0;color:#e6b6ff;font-weight:700">Ver ${ps.length} ${ps.length===1?'plan':'planes'} y precios</summary>${ps.map(x=>`<div class="plan"><strong>${esc(x.nombre)}</strong><div class="price">${money(x.precio)}</div><small>Autorización pendiente · venta desactivada</small><button disabled>Pago no disponible</button></div>`).join('')||'<p class="muted">Sin planes registrados</p>'}</details><a class="btn secondary" style="margin-top:10px" target="_blank" rel="noopener" href="https://wa.me/56946636714?text=${encodeURIComponent('Hola, quiero consultar por '+p.nombre+' en Cat Streaming. ¿Me puedes dar información?')}">Consultar por WhatsApp</a></article>`
+  }).join('')||'<div class="empty">No se encontraron servicios.</div>';
+}
+function loadEditors(){
+  const sid=$('editProduct').value,pid=$('editPlan').value;
+  $('editProduct').innerHTML=services.map(p=>`<option value="${esc(p.id)}">${esc(p.nombre)}</option>`).join('');
+  $('editPlan').innerHTML=plans.map(p=>`<option value="${esc(p.id)}">${esc(p.nombre)} · ${money(p.precio)}</option>`).join('');
+  if(services.some(p=>String(p.id)===sid))$('editProduct').value=sid;
+  if(plans.some(p=>String(p.id)===pid))$('editPlan').value=pid;
+  editProduct();editPlan();
+}
+function editProduct(){const p=services.find(p=>String(p.id)===$('editProduct').value);if(!p)return;$('editName').value=p.nombre||'';$('editCategory').value=p.categoria||'';$('editDesc').value=p.descripcion||'';$('editServiceActive').checked=!!p.activo}
+function editPlan(){const p=plans.find(p=>String(p.id)===$('editPlan').value);if(!p)return;$('editPlanName').value=p.nombre||'';$('editPrice').value=p.precio??'';$('editPlanActive').checked=!!p.activo}
+async function openAdmin(){if(session){showView('admin');await loadCatalog().catch(e=>status('adminStatus',normalizeError(e)))}else{showView('login');status('loginStatus','')}}
+$('adminToggle').onclick=()=>view==='shop'?openAdmin():showView('shop');
+$('cancelLogin').onclick=()=>showView('shop');
+$('search').addEventListener('input',render);$('category').addEventListener('change',render);
+$('editProduct').onchange=editProduct;$('editPlan').onchange=editPlan;
+$('loginForm').onsubmit=async e=>{
+  e.preventDefault();$('loginSubmit').disabled=true;status('loginStatus','Verificando acceso…');
+  try{const {data,error}=await db.auth.signInWithPassword({email:$('loginEmail').value.trim(),password:$('loginPassword').value});if(error)throw error;session=data.session;$('loginPassword').value='';showView('admin');status('adminStatus','Sesión iniciada. Los cambios requieren autorización de Supabase.');await loadCatalog()}
+  catch(e){status('loginStatus','No se pudo iniciar sesión: '+normalizeError(e))}
+  finally{$('loginSubmit').disabled=false}
+};
+$('logout').onclick=async()=>{const {error}=await db.auth.signOut();if(error){status('adminStatus',normalizeError(error));return}session=null;showView('shop');await loadCatalog().catch(()=>{})};
+$('saveProduct').onclick=async()=>{
+  if(!session){showView('login');return}const id=$('editProduct').value;
+  const changes={nombre:$('editName').value.trim(),categoria:$('editCategory').value.trim(),descripcion:$('editDesc').value.trim(),activo:$('editServiceActive').checked};
+  if(!changes.nombre){status('adminStatus','Escribe un nombre.');return}
+  $('saveProduct').disabled=true;status('adminStatus','Guardando servicio…');
+  try{const {data,error}=await db.from('servicios').update(changes).eq('id',id).select('id');if(error)throw error;if(!data?.length)throw Error('Sin permiso para modificar este servicio. Revisa tu cuenta y las políticas RLS.');await loadCatalog();status('adminStatus','Servicio guardado en Supabase correctamente.')}
+  catch(e){status('adminStatus','No se guardó: '+normalizeError(e))}finally{$('saveProduct').disabled=false}
+};
+$('savePlan').onclick=async()=>{
+  if(!session){showView('login');return}const id=$('editPlan').value;const price=Number($('editPrice').value);
+  if(!$('editPlanName').value.trim()||!$('editPrice').value||!Number.isSafeInteger(price)||price<0){status('adminStatus','Ingresa nombre y precio válido en pesos.');return}
+  $('savePlan').disabled=true;status('adminStatus','Guardando plan…');
+  try{const {data,error}=await db.from('planes').update({nombre:$('editPlanName').value.trim(),precio:price,activo:$('editPlanActive').checked}).eq('id',id).select('id');if(error)throw error;if(!data?.length)throw Error('Sin permiso para modificar este plan. Revisa tu cuenta y las políticas RLS.');await loadCatalog();status('adminStatus','Plan guardado en Supabase correctamente.')}
+  catch(e){status('adminStatus','No se guardó: '+normalizeError(e))}finally{$('savePlan').disabled=false}
+};
+$('export').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({servicios:services,planes:plans},null,2)],{type:'application/json'}));a.download='Cat_Streaming_respaldo_Supabase.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+async function init(){
+  if(!window.supabase?.createClient){$('count').textContent='No se pudo cargar la biblioteca de conexión. Comprueba tu internet y recarga la página.';return}
+  db=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+  const {data}=await db.auth.getSession();session=data?.session||null;
+  db.auth.onAuthStateChange((_event,newSession)=>{session=newSession;if(!session&&view==='admin')showView('login')});
+  try{await loadCatalog()}catch(e){$('count').textContent='No se pudo cargar el catálogo: '+normalizeError(e)}
+}
+init();if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script></body></html>
