@@ -1,0 +1,7 @@
+CAT STREAMING - PWA CORREGIDA
+
+Sube los siete archivos extraídos juntos a Netlify. En Chrome abre la URL HTTPS y busca Instalar aplicación. Si ves el icono antiguo, elimina el acceso directo anterior y vuelve a abrir el sitio.
+
+IMPORTANTE: El panel Administrar NO tiene autenticación; cualquier visitante puede abrirlo y hacer cambios locales en su propio navegador. Los cambios no se sincronizan ni modifican el catálogo público. Para administración exclusiva y cambios compartidos se requiere autenticación y almacenamiento en servidor.
+
+No habilitar pagos ni ventas sin verificar autorizaciones comerciales.
